@@ -17,7 +17,6 @@ Na prática, o sistema funciona como um hub central onde os usuários podem:
 
 ##Prints da interface
 
-
 ### Home Page
 <img width="1920" height="955" alt="{69F5381E-0881-4376-80DD-EB94D74B2B81}" src="https://github.com/user-attachments/assets/c5efd48a-b065-405b-9854-cfcce95f4e6b" />
 
@@ -66,17 +65,18 @@ npm run dev
 
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
-Testar o Projeto Online
+#### Testar o Projeto Online
 
-O projeto está hospedado no Netlify: Acessar projeto
+O projeto está hospedado no Netlify: [Clique aqui](https://404notfound404.netlify.app).
+
 
 ⚠️ Observação: O plano gratuito do Netlify permite um número limitado de deploys. Futuras atualizações serão implementadas assim que possível no domínio.
 
-Status do Projeto
+#### Status do Projeto
 
 🚧 Em desenvolvimento
 
 Algumas funcionalidades ainda estão sendo implementadas
 
-Observações Acadêmicas
+#### Observações Acadêmicas
 Este projeto foi desenvolvido como atividade acadêmica, com a colaboração de outros integrantes do grupo. O foco principal é demonstrar aprendizado em React, Vite, CSS e MySQL.
