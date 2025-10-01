@@ -6,7 +6,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
 
-Projeto em desenvolvimento desenvolvido para a organização estudantil **Lideranças Empáticas** da FECAP, com o objetivo de modernizar e potencializar suas ações sociais. A plataforma busca resolver problemas de desconfiança e baixo engajamento no processo de doação, oferecendo um ambiente digital que combina **transparência** e **sensação de comunidade**.
+Projeto em desenvolvimento para a organização estudantil **Lideranças Empáticas** da FECAP, com o objetivo de modernizar e potencializar suas ações sociais. A plataforma busca resolver problemas de desconfiança e baixo engajamento no processo de doação, oferecendo um ambiente digital que combina **transparência** e **sensação de comunidade**.
 
 Na prática, o sistema funciona como um hub central onde os usuários podem:  
 - Realizar doações  
