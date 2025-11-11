@@ -1,38 +1,41 @@
 import { useState, useEffect, useRef } from "react";
-import api from "../api.js";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { data } from "react-router-dom";
 
 import ImportModal from "./modal/importarModal.jsx";
 import ExportarModal from "./modal/exportarModal.jsx";
 import FiltroModal from "./modal/FilterModal.jsx";
 import OrdenarModal from "./modal/ordenarModal.jsx";
 import ExcluirModal from "./modal/excluirModal.jsx";
-import EditarModal from "./modal/editarModalAluno.jsx";
-import { useNavigate } from "react-router-dom";
+import EditCampanhaModal from "./modal/editarModalCampanha.jsx";
+import api from "../api.js";
 
-
-
-function Grupo({ onSelectPage }) {
+function Campanhas({ onSelectPage }) {
+  const [selectedFile, setSelectedFile] = useState(null);
   const [filterSelecionado, setFilterSelecionado] = useState("igual");
-  const [grupos, setGrupos] = useState([]);
-  const [gruposOriginais, setGruposOriginais] = useState([]);
+  const [campanhas, setCampanhas] = useState([]);
+  const [campanhasOriginais, setCampanhasOriginais] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [fileName, setFileName] = useState("grupos_exportados");
+  const [fileName, setFileName] = useState("campanhas_exportados");
   const [rangeStart, setRangeStart] = useState("");
   const [rangeEnd, setRangeEnd] = useState("");
   const [exportType, setExportType] = useState("Todos");
-  const [valorSelecionado, setValorSelecionado] = useState("ID_Grupo");
-  const [grupoEdit, setGrupoEdit] = useState(null);
+  const [valorSelecionado, setValorSelecionado] = useState("ID_Campanha");
+
+  const [campanhaEdit, setCampanhaEdit] = useState(null);
   const [filtros, setFiltros] = useState([]);
   const headerCheckboxRef = useRef(null);
 
-  const navigate = useNavigate()
-
-  const camposGrupo = [
-    { value: "ID_Grupo", label: "ID do grupo" },
-    { value: "Grupo_Nome", label: "Nome do grupo" },
-    { value: "Grupo_Curso", label: "Curso do grupo" }
+  const camposCampanhas = [
+    { value: "ID_Campanha", label: "ID da Campanha" },
+    { value: "Campanha_Nome", label: "Nome da Campanha" },
+    { value: "Campanha_Local", label: "Local" },
+    { value: "Campanha_Grupo", label: "Grupo" },
+    { value: "Campanha_Meta", label: "Meta" },
+    { value: "Campanha_Quantidade", label: "Quantidade" },
+    { value: "created_at", label: "Data de criação" },
+    { value: "finish_at", label: "Data de Finalização" },
   ];
 
   const [showModal, setShowModal] = useState(false);
@@ -41,22 +44,30 @@ function Grupo({ onSelectPage }) {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
-  filtros[0] = "Grupos";
+  const teste = "Campanha ";
+  filtros[0] = "Campanhas";
 
-  const carregarGrupos = async () => {
+  const handleChange = (event) => {
+    setValorSelecionado(event.target.value);
+    if (event.target.value === "id") setFilterSelecionado("igual");
+  };
+
+  const carregarCampanhas = async () => {
     try {
-      const response = await api.post("/grupos");
-      console.log(response.data);
-      setGrupos(response.data);
-      setGruposOriginais(response.data);
+      console.log("body: ", teste)
+      const response = await api.post(`/tabela`, {teste})
+      setCampanhas(response.data)
+      setCampanhasOriginais(response.data)
     } catch (err) {
-      console.error("Erro ao buscar grupos:", err);
-      alert(err.response?.data?.error || "Erro ao buscar grupos");
+      console.error("Erro ao buscar campanhas:", err);
+      alert("Erro no servidor ao buscar campanhas");
+      setCampanhas([]);
+      setCampanhasOriginais([]);
     }
   };
 
   useEffect(() => {
-    carregarGrupos();
+    carregarCampanhas();
   }, []);
 
   const toggleSelect = (id) => {
@@ -66,32 +77,34 @@ function Grupo({ onSelectPage }) {
   };
 
   const toggleSelectAll = () => {
-    if (selected.length === grupos.length) {
+    if (selected.length === (campanhas?.length || 0)) {
       setSelected([]);
     } else {
-      setSelected(grupos.map((g) => g.ID_Grupo));
+      setSelected((campanhas || []).map((u) => u.ID_Campanha));
     }
   };
 
-  const isAllSelected = selected.length === grupos.length;
+  const isAllSelected =
+    (campanhas?.length || 0) > 0 && selected.length === campanhas.length;
 
   useEffect(() => {
     if (headerCheckboxRef.current) {
       const isPartial =
-        selected.length > 0 && selected.length < grupos.length;
+        selected.length > 0 && selected.length < (campanhas?.length || 0);
       headerCheckboxRef.current.indeterminate = isPartial;
     }
-  }, [selected, grupos.length]);
+  }, [selected, campanhas?.length]);
 
   const gerarWorkbook = (dados) => {
     const worksheet = XLSX.utils.json_to_sheet(dados);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Grupos");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Campanhas");
     return workbook;
   };
 
-  const exportarGrupos = () => {
-    let dadosFiltrados = grupos;
+  const exportarUsuarios = () => {
+    let dadosFiltrados = campanhas || [];
+
     if (exportType === "intervalo") {
       if (!rangeStart || !rangeEnd) {
         alert("Preencha o ID inicial e final!");
@@ -99,12 +112,12 @@ function Grupo({ onSelectPage }) {
       }
       const start = parseInt(rangeStart, 10);
       const end = parseInt(rangeEnd, 10);
-      dadosFiltrados = grupos.filter(
-        (u) => u.ID_Grupo >= start && u.ID_Grupo <= end
+      dadosFiltrados = (campanhas || []).filter(
+        (u) => u.ID_Campanha >= start && u.ID_Campanha <= end
       );
 
       if (dadosFiltrados.length === 0) {
-        alert("Nenhum grupo encontrado no range informado!");
+        alert("Nenhuma campanha encontrada no range informado!");
         return;
       }
     }
@@ -114,61 +127,64 @@ function Grupo({ onSelectPage }) {
       bookType: "xlsx",
       type: "array",
     });
-    const data = new Blob([excelBuffer], { type: "application/octet-stream" });
-    saveAs(data, `${fileName}.xlsx`);
+    const blobData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+
+    saveAs(blobData, `${fileName}.xlsx`);
     setShowModal(false);
   };
 
-  const handleExportarGrupos = async () => {
+  const handleExportarUsuarios = async () => {
     try {
-      console.log("Iniciando exportação de todos os grupos...");
       setExportType("Todos");
-      await exportarGrupos();
-      alert("Planilha exportada com sucesso!");
+      await exportarUsuarios();
+      alert("✅ Planilha exportada com sucesso!");
     } catch (erro) {
-      console.error("Erro ao exportar grupos:", erro);
+      console.error("❌ Erro ao exportar campanhas:", erro);
       alert("Erro ao exportar planilha");
     }
   };
 
   const abrirModalEdicao = async () => {
     if (selected.length !== 1) {
-      alert("Selecione exatamente 1 grupo para editar!");
+      alert("Selecione exatamente 1 campanha para editar!");
       return;
     }
+
     const id = selected[0];
-    try {
-      const response = await api.get(`/grupos/${id}`);
-
-      const grupo = response.data.rows[0]
-
-      setAlunoEdit(grupo);
+    try {      
+      const response = await api.get(`campanhas/${id}`); 
+      setCampanhaEdit(response.data);
       setShowEditModal(true);
     } catch (err) {
-      console.error("Erro ao buscar grupo:", err);
-      alert("Erro ao buscar dados do grupo");
+      console.error("Erro ao buscar campanha:", err);
+      alert("Erro ao buscar dados da campanha");
     }
   };
-
 
   return (
     <div className="main-container-tabela">
       <div className="cabecalho-tabela">
         <button
           className="btn-tabela adicionar-tabela"
-          onClick={() => onSelectPage("CadastroGrupo")}
+          onClick={() => onSelectPage("CadastroCampanha")}
         >
           Adicionar +
         </button>
-        <button onClick={() => navigate("/forms")} className="btn-tabela formulario-aluno">Formulário</button>
+
         <div className="dropdown-tabela">
-          <button className="btn-tabela mais-opcoes-tabela">Mais opções ▾</button>
+          <button className="btn-tabela mais-opcoes-tabela">
+            Mais opções ▾
+          </button>
           <div className="dropdown-content-tabela">
-            <a onClick={() => setShowModal(true)}>Exportar grupos</a>
+            <a onClick={() => setShowModal(true)}>Exportar campanhas</a>
+            <a onClick={() => setShowImportModal(true)}>Importar campanhas</a>
             <a onClick={() => setShowDeleteModal(true)}>Excluir</a>
             <a onClick={abrirModalEdicao}>Editar</a>
           </div>
         </div>
+
         <div className="rightMenu-tabela">
           <button
             className="btn-tabela filtrar-tabela"
@@ -186,7 +202,7 @@ function Grupo({ onSelectPage }) {
       </div>
 
       <p className="indicador-selecionados-tabela">
-        {selected.length} grupo(s) selecionado(s)
+        {selected.length} campanha(s) selecionada(s)
       </p>
 
       <div className="tabela">
@@ -204,35 +220,46 @@ function Grupo({ onSelectPage }) {
               </th>
               <th>ID</th>
               <th>Nome</th>
-              <th>Curso</th>
-              <th>Aluno 1</th>
-              <th>Aluno 2</th>
-              <th>Aluno 3</th>
-              <th>Aluno 4</th>
-              <th>Aluno 5</th>
-              <th>Aluno 6</th>
-              <th>Aluno 7</th>
-              <th>Aluno 8</th>
-              <th>Aluno 9</th>
+              <th>Local</th>
+              <th>Grupo</th>
+              <th>Meta</th>
+              <th>Quantidade</th>
+              <th>Criado em</th>
+              <th>Acaba em</th>
             </tr>
           </thead>
+
           <tbody>
-            {grupos.map((grupo) => (
-              <tr key={grupo.ID_Grupo}>
+            {(campanhas || []).map((u) => (
+              <tr key={u.ID_Campanha}>
                 <td>
                   <input
                     className="chk-tabela"
                     type="checkbox"
-                    checked={selected.includes(grupo.ID_Grupo)}
-                    onChange={() => toggleSelect(grupo.ID_Grupo)}
+                    checked={selected.includes(u.ID_Campanha)}
+                    onChange={() => toggleSelect(u.ID_Campanha)}
                   />
                 </td>
-                <td>{grupo.ID_Grupo}</td>
-                <td>{grupo.Grupo_Nome}</td>
-                <td>{grupo.Grupo_Curso}</td>
-                {Array.from({ length: 9 }, (_, i) => (
-                  <td key={i}>{grupo[`Aluno_${i + 1}`] || ""}</td>
-                ))}
+                <td>{u.ID_Campanha}</td>
+                <td>{u.Campanha_Nome}</td>
+                <td>{u.Campanha_Local}</td>
+                <td>{u.Campanha_Grupo}</td>
+                <td>{u.Campanha_Meta}</td>
+                <td>{u.Campanha_Quantidade}</td>
+                <td>
+                  {u.created_at
+                    ? new Date(u.created_at).toLocaleDateString("pt-BR", {
+                        timeZone: "America/Sao_Paulo",
+                      })
+                    : ""}
+                </td>
+                <td>
+                  {u.finish_at
+                    ? new Date(u.finish_at).toLocaleDateString("pt-BR", {
+                        timeZone: "America/Sao_Paulo",
+                      })
+                    : ""}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -250,24 +277,24 @@ function Grupo({ onSelectPage }) {
         rangeEnd={rangeEnd}
         setRangeStart={setRangeStart}
         setRangeEnd={setRangeEnd}
-        exportarUsuarios={exportarGrupos}
+        exportarUsuarios={exportarUsuarios}
       />
 
       <ImportModal
         isOpen={showImportModal}
         onClose={() => setShowImportModal(false)}
-        onImportSuccess={carregarGrupos}
-        handleExportarGrupos={handleExportarGrupos}
-        tabela="Grupo "
-      />
+        onImportSuccess={carregarCampanhas}
+        handleExportarUsuarios={handleExportarUsuarios}
+        tabela="Campanha "      />
 
       <ExcluirModal
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         selected={selected}
-        setItens={setGrupos}
-        carregarItens={carregarGrupos}
-        tabela="Grupo "
+        setItens={setCampanhas}
+        idField="ID_Campanha"
+        carregarItens={carregarCampanhas}
+        tabela="Campanha "
       />
 
       <FiltroModal
@@ -279,10 +306,11 @@ function Grupo({ onSelectPage }) {
         setValorSelecionado={setValorSelecionado}
         filterSelecionado={filterSelecionado}
         setFilterSelecionado={setFilterSelecionado}
-        usuariosOriginais={gruposOriginais}
-        setResponse={setGrupos}
-        campos={camposGrupo}
-        tabela="Grupo "
+        usuariosOriginais={campanhasOriginais}
+        setItens={setCampanhas}
+        setResponse={setCampanhas}
+        campos={camposCampanhas}
+        tabela="Campanha "
       />
 
       <OrdenarModal
@@ -292,20 +320,20 @@ function Grupo({ onSelectPage }) {
         setValorSelecionado={setValorSelecionado}
         filterSelecionado={filterSelecionado}
         setFilterSelecionado={setFilterSelecionado}
-        setItens={setGrupos}
-        tabela="Grupo "
-        campos={camposGrupo}
+        setItens={setCampanhas}
+        tabela="Campanha "
+        campos={camposCampanhas}
       />
 
-      <EditarModal
+      <EditCampanhaModal
         isOpen={showEditModal}
         onClose={() => setShowEditModal(false)}
-        grupoEdit={grupoEdit}
-        setGrupoEdit={setGrupoEdit}
-        carregarGrupos={carregarGrupos}
+        campanhaEdit={campanhaEdit}
+        setCampanhaEdit={setCampanhaEdit}
+        carregarCampanhas={carregarCampanhas}
       />
     </div>
   );
 }
 
-export default Grupo;
+export default Campanhas;

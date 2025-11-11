@@ -9,33 +9,33 @@ import ImportModal from "./modal/importarModal.jsx";
 import ExportarModal from "./modal/exportarModal.jsx";
 import FiltroModal from "./modal/FilterModal.jsx";
 import OrdenarModal from "./modal/ordenarModal.jsx";
-import ExcluirModal from "./modal/excluirModalAluno.jsx";
-import EditarModal from "./modal/editarModalAluno.jsx";
+import ExcluirModal from "./modal/excluirModal.jsx";
+import EditarModal from "./modal/editarModalUsuario.jsx";
 
-function Alunos({ onSelectPage }) {
+function Usuarios({ onSelectPage }) {
+  // Estados principais
+  const [selectedFile, setSelectedFile] = useState(null);
   const [filterSelecionado, setFilterSelecionado] = useState("igual");
-  const [alunos, setAlunos] = useState([]);
-  const [alunosOriginais, setAlunosOriginais] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
+  const [usuariosOriginais, setUsuariosOriginais] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [fileName, setFileName] = useState("alunos_exportados");
+  const [fileName, setFileName] = useState("usuarios_exportados");
   const [rangeStart, setRangeStart] = useState("");
   const [rangeEnd, setRangeEnd] = useState("");
   const [exportType, setExportType] = useState("Todos");
-  const [valorSelecionado, setValorSelecionado] = useState("ID_Aluno");
+  const [valorSelecionado, setValorSelecionado] = useState("ID_Usuario");
 
-  const [alunoEdit, setAlunoEdit] = useState(null);
+  const [usuarioEdit, setUsuarioEdit] = useState(null);
   const [filtros, setFiltros] = useState([]);
   const headerCheckboxRef = useRef(null);
 
-  const camposAluno = [
-    { value: "ID_Aluno", label: "ID do alunos" },
-    { value: "Aluno_RA", label: "RA do aluno" },
-    { value: "Aluno_Nome", label: "Nome" },
-    { value: "Aluno_Email", label: "Email" },
-    { value: "Aluno_CPF", label: "CPF" },
-    { value: "Aluno_Telefone", label: "Telefone" },
-    { value: "Aluno_Grupo", label: "Grupo" },
-    { value: "Aluno_Turma", label: "Turma" },
+  const camposUsuario = [
+    { value: "ID_Usuario", label: "ID do usuário" },
+    { value: "Usuario_Nome", label: "Nome" },
+    { value: "Usuario_CPF", label: "CPF" },
+    { value: "Usuario_Empresa", label: "Empresa" },
+    { value: "Usuario_Email", label: "Email" },
+    { value: "Usuario_Telefone", label: "Telefone" },
     { value: "created_at", label: "Data de criação" },
   ];
   // Controle dos modais
@@ -45,26 +45,55 @@ function Alunos({ onSelectPage }) {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
-  const teste = "aluno ";
-  filtros[0] = "Alunos";
+  const teste = "Usuario ";
+  filtros[0] = "Usuários";
 
-  const carregarAlunos = async () => {
+  // Opções dos filtros
+
+  // Manipulação de filtros
+  const handleChange = (event) => {
+    setValorSelecionado(event.target.value);
+    if (event.target.value === "id") {
+      setFilterSelecionado("igual");
+    }
+  };
+  const abrirModalEdicao = async () => {
+    if (selected.length !== 1) {
+      alert("Selecione exatamente 1 usuário para editar!");
+      return;
+    }
+
+    const id = selected[0];
+
     try {
-      const response = await api.post("/usuarios", { teste });
-
-      setAlunos(response.data);
-      setAlunosOriginais(response.data);
+      const response = await api.get(`/usuario/${id}`);
+      setUsuarioEdit(response.data);
+      setShowEditModal(true);
     } catch (err) {
-      console.error("Erro ao buscar alunos:", err);
-      alert(err.response?.data?.error || "Erro ao buscar alunos");
+      console.error("Erro ao buscar usuário:", err);
+      alert("Erro ao buscar dados do usuário");
+    }
+    if (event.target.value === "id") setFilterSelecionado("igual");
+  };
+
+  // Função: carregar usuários
+  const carregarUsuarios = async () => {
+    try {
+      console.log("body: ", teste)
+      const response = await api.post('/tabela', {teste} )
+        setUsuarios(response.data);
+        setUsuariosOriginais(response.data);
+    } catch (err) {
+      console.error("Erro ao buscar usuários:", err);
+      alert("Erro no servidor ao buscar usuário");
     }
   };
 
   useEffect(() => {
-    carregarAlunos();
+    carregarUsuarios();
   }, []);
 
-  // Seleção de alunoss
+  // Seleção de usuários
   const toggleSelect = (id) => {
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
@@ -72,32 +101,33 @@ function Alunos({ onSelectPage }) {
   };
 
   const toggleSelectAll = () => {
-    if (selected.length === alunos.length) {
+    if (selected.length === usuarios.length) {
       setSelected([]);
     } else {
-      setSelected(alunos.map((u) => u.ID_Aluno));
+      setSelected(usuarios.map((u) => u.ID_Usuario));
     }
   };
 
-  const isAllSelected = selected.length === alunos.length;
+  const isAllSelected = selected.length === usuarios.length;
 
   useEffect(() => {
     if (headerCheckboxRef.current) {
-      const isPartial = selected.length > 0 && selected.length < alunos.length;
+      const isPartial =
+        selected.length > 0 && selected.length < usuarios.length;
       headerCheckboxRef.current.indeterminate = isPartial;
     }
-  }, [selected, alunos.length]);
+  }, [selected, usuarios.length]);
 
   // Exportação
   const gerarWorkbook = (dados) => {
     const worksheet = XLSX.utils.json_to_sheet(dados);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Alunos");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Usuarios");
     return workbook;
   };
 
-  const exportarAlunos = () => {
-    let dadosFiltrados = alunos;
+  const exportarUsuarios = () => {
+    let dadosFiltrados = usuarios;
 
     if (exportType === "intervalo") {
       if (!rangeStart || !rangeEnd) {
@@ -106,12 +136,12 @@ function Alunos({ onSelectPage }) {
       }
       const start = parseInt(rangeStart, 10);
       const end = parseInt(rangeEnd, 10);
-      dadosFiltrados = alunos.filter(
-        (u) => u.ID_Aluno >= start && u.ID_Aluno <= end
+      dadosFiltrados = usuarios.filter(
+        (u) => u.ID_Usuario >= start && u.ID_Usuario <= end
       );
 
       if (dadosFiltrados.length === 0) {
-        alert("Nenhum aluno encontrado no range informado!");
+        alert("Nenhum usuário encontrado no range informado!");
         return;
       }
     }
@@ -127,42 +157,50 @@ function Alunos({ onSelectPage }) {
     setShowModal(false);
   };
 
-  const handleExportarAlunos = async () => {
+  const handleExportarUsuarios = async () => {
     try {
-      console.log("🧾 Iniciando exportação de todos os alunoss...");
+      console.log("🧾 Iniciando exportação de todos os usuários...");
       setExportType("Todos");
-      await exportarAlunos();
+      await exportarUsuarios();
       alert("✅ Planilha exportada com sucesso!");
     } catch (erro) {
-      console.error("❌ Erro ao exportar alunoss:", erro);
+      console.error("❌ Erro ao exportar usuários:", erro);
       alert("Erro ao exportar planilha");
     }
   };
 
-const abrirModalEdicao = async () => {
-  if (selected.length !== 1) {
-    alert("Selecione exatamente 1 aluno para editar!");
-    return;
-  }
-  const id = selected[0];
-  try {
-    const response = await api.get(`/alunos/${id}`);
+  // Exclusão de usuários
+ 
 
-    const aluno = response.data.rows[0]
-  
-    setAlunoEdit(aluno);
-    setShowEditModal(true);
-  } catch (err) {
-    console.error("Erro ao buscar aluno:", err);
-    alert("Erro ao buscar dados do aluno");
-  }
-};
+  // // Abrir modal de edição
+  // const abrirModalEdicao = async () => {
+  //   if (selected.length !== 1) {
+  //     alert("Selecione exatamente 1 usuário para editar!");
+  //     return;
+  //   }
+
+  //   const id = selected[0];
+  //   try {
+  //     const response = await api.delete("/deleteFromTable", {
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ ids: selected }),
+  //     });
+
+  //     const data = await response.json();
+  //     setUsuarioEdit(data);
+  //     setShowEditModal(true);
+  //   } catch (err) {
+  //     console.error("Erro ao buscar usuário:", err);
+  //     alert("Erro ao buscar dados do usuário");
+  //   }
+  // };
+
   return (
     <div className="main-container-tabela">
       <div className="cabecalho-tabela">
         <button
           className="btn-tabela adicionar-tabela"
-          onClick={() => onSelectPage("CadastroAluno")}
+          onClick={() => onSelectPage("CadastroUsuario")}
         >
           Adicionar +
         </button>
@@ -172,8 +210,8 @@ const abrirModalEdicao = async () => {
             Mais opções ▾
           </button>
           <div className="dropdown-content-tabela">
-            <a onClick={() => setShowModal(true)}>Exportar alunos</a>
-            <a onClick={() => setShowImportModal(true)}>Importar alunos</a>
+            <a onClick={() => setShowModal(true)}>Exportar usuários</a>
+            <a onClick={() => setShowImportModal(true)}>Importar usuários</a>
             <a onClick={() => setShowDeleteModal(true)}>Excluir</a>
             <a onClick={abrirModalEdicao}>Editar</a>
           </div>
@@ -196,7 +234,7 @@ const abrirModalEdicao = async () => {
       </div>
 
       <p className="indicador-selecionados-tabela">
-        {selected.length} alunos(s) selecionado(s)
+        {selected.length} usuário(s) selecionado(s)
       </p>
 
       <div className="tabela">
@@ -213,30 +251,34 @@ const abrirModalEdicao = async () => {
                 />
               </th>
               <th>ID</th>
-              <th>RA</th>
-              <th>Nome</th>
+              <th>Usuário</th>
+              <th>CPF/CNPJ</th>
+              <th>Empresa</th>
               <th>E-mail</th>
-              <th>Grupo</th>
+              <th>Telefone</th>
+              <th>Senha</th>
               <th>Criado em</th>
             </tr>
           </thead>
 
           <tbody>
-            {alunos.map((u) => (
-              <tr key={u.ID_Aluno}>
+            {usuarios.map((u) => (
+              <tr key={u.ID_Usuario}>
                 <td>
                   <input
                     className="chk-tabela"
                     type="checkbox"
-                    checked={selected.includes(u.ID_Aluno)}
-                    onChange={() => toggleSelect(u.ID_Aluno)}
+                    checked={selected.includes(u.ID_Usuario)}
+                    onChange={() => toggleSelect(u.ID_Usuario)}
                   />
                 </td>
-                <td>{u.ID_Aluno}</td>
-                <td>{u.Aluno_RA}</td>
-                <td>{u.Aluno_Nome}</td>
-                <td>{u.Aluno_Email}</td>
-                <td>{u.Aluno_Grupo}</td>
+                <td>{u.ID_Usuario}</td>
+                <td>{u.Usuario_Nome}</td>
+                <td>{u.Usuario_CPF}</td>
+                <td>{u.Usuario_Empresa}</td>
+                <td>{u.Usuario_Email}</td>
+                <td>{u.Usuario_Telefone}</td>
+                <td>{u.Usuario_Senha}</td>
                 <td>
                   {new Date(u.created_at).toLocaleDateString("pt-BR", {
                     timeZone: "America/Sao_Paulo",
@@ -248,6 +290,7 @@ const abrirModalEdicao = async () => {
         </table>
       </div>
 
+      {/* 🔹 Modais importados e controlados por estado */}
       <ExportarModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
@@ -259,24 +302,25 @@ const abrirModalEdicao = async () => {
         rangeEnd={rangeEnd}
         setRangeStart={setRangeStart}
         setRangeEnd={setRangeEnd}
-        exportarUsuarios={exportarAlunos}
+        exportarUsuarios={exportarUsuarios}
       />
 
       <ImportModal
         isOpen={showImportModal}
         onClose={() => setShowImportModal(false)}
-        onImportSuccess={carregarAlunos}
-        handleExportarUsuarios={handleExportarAlunos}
-        tabela="Aluno "
+        onImportSuccess={carregarUsuarios}
+        handleExportarUsuarios={handleExportarUsuarios}
+        tabela="Usuario "
       />
 
       <ExcluirModal
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
-        selectedAluno={selected}
-        setAlunosExcluir={setAlunos}        
-        carregarAlunosExcluir={carregarAlunos}
-        tabelaAluno="Aluno "
+        selected={selected}
+        setItens={setUsuarios} 
+        idField="ID_Usuario"
+        carregarItens={carregarUsuarios}
+        tabela="Usuario "
       />
 
       <FiltroModal
@@ -288,10 +332,10 @@ const abrirModalEdicao = async () => {
         setValorSelecionado={setValorSelecionado}
         filterSelecionado={filterSelecionado}
         setFilterSelecionado={setFilterSelecionado}
-        usuariosOriginais={alunosOriginais}
-        setResponse={setAlunos}
-        campos={camposAluno}
-        tabela="Aluno "
+        usuariosOriginais={usuariosOriginais}
+        setResponse={setUsuarios}
+        campos={camposUsuario}
+        tabela="Usuario "
       />
 
       <OrdenarModal
@@ -301,20 +345,20 @@ const abrirModalEdicao = async () => {
         setValorSelecionado={setValorSelecionado}
         filterSelecionado={filterSelecionado}
         setFilterSelecionado={setFilterSelecionado}
-        setItens={setAlunos}
-        tabela="Aluno "
-        campos={camposAluno}
+        setItens={setUsuarios}
+        tabela="Usuario "
+        campos={camposUsuario}
       />
 
       <EditarModal
         isOpen={showEditModal}
         onClose={() => setShowEditModal(false)}
-        alunoEdit={alunoEdit}
-        setAlunoEdit={setAlunoEdit}
-        carregarAlunos={carregarAlunos}
+        usuarioEdit={usuarioEdit}
+        setUsuarioEdit={setUsuarioEdit}
+        carregarUsuarios={carregarUsuarios}
       />
     </div>
   );
 }
 
-export default Alunos;
+export default Usuarios;

@@ -1,26 +1,43 @@
-import{useState} from "react"
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import api from "./api";
 
-function Verificar(){
+function Verificar(){ 
+    const email = localStorage.getItem("alunoEmail")
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try{
+            const res = await api.post(
+                `/enviaremail`,
+                {email}
+             )
+             console.log("Requisição recebida", res)
+
+             console.log("Resposta do backend", res.data)
+
+        }catch(err){
+            console.error("Erro na verificação", err.response?.data || err.message)
+            alert("Erro na verificação: " + (err.response?.data?.error || err.message))
+        }        
+    }
+
     return(
-        <body className="bodyVerificar">
+        <div className="divVerificar">
             
         <aside className="asideVerificar">
-            <img className="logoVerificar" src="LogoFundoBranco.avif" alt="logo" />
+            <img className="logoVerificar" src="/LogoFundoBranco.avif" alt="logo" />
             <h1 className="h1VerificarEmail">Verificação de E-mail</h1>
-            <h1 className="h1Verificar">Um código de verificação foi  enviado para o seu e-mail!
-            Verifique sua caixa de e-mail e entre na sua conta!</h1>
-            <input className="inputCodigo" 
-            type="text" 
-            id="codigo" 
-            placeholder ="XXXXXX"                      
-            />
             <p className="pVerificar">Não recebeu? <a href=""> Reenviar código</a></p>
-
-            <button className="btnVerificar">Entrar</button>
+            <h1 className="h1Verificar">Clique no botão abaixo para verificar seu E-mail. Um código será enviado para o seu e-mail logo após.
+            Verifique sua caixa de e-mail e entre na sua conta! (Confira a caixa de spam ou a lixeira.)</h1>
+            <form onSubmit={handleSubmit}>
+            <button type = "submit" className="btnVerificar">Verificar</button>
+            </form>
 
         </aside>
         
-        </body>
+        </div>
         
 
     )

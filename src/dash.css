@@ -1,0 +1,243 @@
+/* ====== DASHBOARD ====== */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  font-family: "Poppins", sans-serif;
+  color: #1f2937;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ====== TOPO ====== */
+.dashboard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.selectsDash select {
+  height: 45px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px 14px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.selectsDash select:hover {
+  border-color: #10b981;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+}
+
+/* ====== RESUMO ====== */
+.resumo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+
+  padding-bottom: 10px;
+  height: 100px;
+}
+
+.resumo-card {
+  flex: 0 0 auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 180px;
+}
+
+.resumo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+}
+
+.resumo-card h2 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.resumo-card p {
+  font-size: 28px;
+  font-weight: bold;
+  color:  #00ab72;
+  
+}
+
+/* ====== GRÁFICOS ====== */
+.graficos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 25px;
+  width: 100%;
+  
+  box-sizing: border-box;
+}
+
+.grafico-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  
+  min-height: 400px;
+  transition: all 0.3s ease;
+}
+
+.grafico-card:hover {
+  transform: translateY(-4px);
+  border-color: #10b981;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15);
+}
+
+.grafico-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: #065f46;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e5e7eb;
+  text-align: left;
+}
+
+.grafico-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+/* ====== GRÁFICO LARGO (EX: Evolução) ====== */
+.grafico-largo {
+  grid-column: 1 / -1;
+}
+
+/* ====== RESPONSIVIDADE ====== */
+@media (max-width: 1024px) {
+  .dashboard {
+    padding: 20px;
+  }
+
+  .graficos-container {
+    grid-template-columns: 1fr;
+  }
+
+  .resumo-grid {
+    justify-content: flex-start;
+  }
+
+  .grafico-card {
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .resumo-card {
+    flex: 1 1 100%;
+    min-width: unset;
+  }
+
+  .grafico-card {
+    padding: 20px;
+  }
+
+  .grafico-wrapper {
+    min-height: 250px;
+  }
+}
+/* ====== CARDS DE CAMPANHAS ====== */
+.cards-campanhas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  
+}
+
+.card-campanha-mini {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid transparent;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.card-campanha-mini:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(16, 185, 129, 0.2);
+}
+
+.card-campanha-icone {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.card-campanha-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-campanha-titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.card-campanha-valor {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* ====== RESPONSIVIDADE ====== */
+@media (max-width: 1024px) {
+  .cards-campanhas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-campanhas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-campanha-mini {
+    padding: 12px 14px;
+  }
+
+  .card-campanha-titulo {
+    font-size: 13px;
+  }
+
+  .card-campanha-valor {
+    font-size: 18px;
+  }
+}

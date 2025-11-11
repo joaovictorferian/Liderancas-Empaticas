@@ -1,17 +1,29 @@
 import { useState } from "react";
-import Aluno from './components/Aluno.jsx';
-import Grupo from './components/grupo.jsx';
-import SidebarAdmin from './components/SidebarAdmin.jsx';
-import HeaderAdmin from './components/HeaderAdmin.jsx';
+import api from "./api.js";
+import Aluno from "./components/Aluno.jsx";
+import Grupo from "./components/grupo.jsx";
+import Alimentos from "./components/alimentos.jsx";
+import Dinheiro from "./components/dinheiro.jsx";
+import Campanhas from "./components/campanhas.jsx";
+import Usuarios from "./components/usuarios.jsx";
+import PainelSuporte from "./Suporte.jsx";
+import SidebarAdmin from "./components/SidebarAdmin.jsx";
+
+import CadastroUsuario from "./components/cadastroUsuario.jsx";
+import CadastroCampanha from "./components/cadastroCampanha.jsx";
+import CadastroGrupo from "./components/CadastroGrupo.jsx";
+import CadastroAlimento from "./components/CadastroAlimento.jsx";
+import CadastroAluno from "./components/CadastroAluno.jsx";
+import CadastroDinheiro from "./components/CadastroDinheiro.jsx";
+import Relatorios from "./components/Relatorios.jsx";
 
 function Admin() {
   const [userData, setUserData] = useState({
     Usuario_Email: "",
     Usuario_Senha: "",
-    Usuario_Cargo: ""
+    Usuario_Cargo: "",
   });
 
-  // controla qual tela está ativa
   const [activeScreen, setActiveScreen] = useState("home");
 
   const handleLogout = () => {
@@ -22,14 +34,7 @@ function Admin() {
   const handleUpdate = async () => {
     const ID_Usuario = localStorage.getItem("ID_Usuario");
     try {
-      const response = await fetch(
-        `http://localhost:500/api/users/usuario/${ID_Usuario}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(userData)
-        }
-      );
+      const response = await api.put(`/usuario/${ID_Usuario}`);
       const data = await response.json();
       alert(data.msg || data.error);
     } catch (err) {
@@ -44,22 +49,45 @@ function Admin() {
         onUpdate={handleUpdate}
         userData={userData}
         setUserData={setUserData}
-        onSelectPage={(page) => setActiveScreen(page)} // <-- aqui
+        onSelectPage={(page) => setActiveScreen(page)}
       />
-
       <div className="mainAdmin">
-        <HeaderAdmin />
+          
 
         {/* renderiza a tela conforme activeScreen */}
-        {activeScreen === "home" && <h2>Bem-vindo ao painel22222222</h2>}
-        {activeScreen === "aluno" && <Aluno />}
-        {activeScreen === "relatorios" && <div>Relatórios (placeholder)</div>}
-        {activeScreen === "grupos" && <Grupo />}
-        {activeScreen === "alimentos" && <div>Doações - Alimentos</div>}
-        {activeScreen === "dinheiro" && <div>Doações - Dinheiro</div>}
-        {activeScreen === "campanhas" && <div>Doações - Campanhas</div>}
-        {activeScreen === "usuarios" && <div>Usuários (placeholder)</div>}
-        {activeScreen === "administrativo" && <div>Administrativo (placeholder)</div>}
+        {/* {activeScreen === "home" && <h2>Bem-vindo ao painel22222222</h2>} */}
+        {activeScreen === "aluno" && (
+          <Aluno onSelectPage={(page) => setActiveScreen(page)} />
+        )}
+        {/* {activeScreen === "relatorios" && <div>Relatórios (placeholder)</div>} */}
+        {activeScreen === "grupos" && (
+          <Grupo onSelectPage={(page) => setActiveScreen(page)} />
+        )}
+        {activeScreen === "alimentos" && (
+          <Alimentos onSelectPage={(page) => setActiveScreen(page)} />
+        )}
+        {activeScreen === "dinheiro" && (
+          <Dinheiro onSelectPage={(page) => setActiveScreen(page)} />
+        )}
+        {activeScreen === "campanhas" && (
+          <Campanhas onSelectPage={(page) => setActiveScreen(page)} />
+        )}
+        {activeScreen === "usuarios" && (
+          <Usuarios onSelectPage={(page) => setActiveScreen(page)} />
+        )}
+        {activeScreen === "relatorios" && (
+          <Relatorios onSelectPage={(page) => setActiveScreen(page)} />
+        )}
+        {activeScreen === "CadastroUsuario" && <CadastroUsuario />}
+        {activeScreen === "CadastroAluno" && <CadastroAluno />}
+        {activeScreen === "CadastroGrupo" && <CadastroGrupo />}
+        {activeScreen === "CadastroAlimento" && (
+          <CadastroAlimento onSelectPage={(page) => setActiveScreen(page)} />
+        )}
+
+        {activeScreen === "CadastroCampanha" && <CadastroCampanha />}
+  {activeScreen === "CadastroDinheiro" && <CadastroDinheiro onSelectPage={(page) => setActiveScreen(page)} />}
+        {activeScreen === "suporte" && <PainelSuporte />}
       </div>
     </div>
   );

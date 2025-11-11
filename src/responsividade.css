@@ -1,0 +1,331 @@
+/* MEDIA QUERIES PARA RESPONSIVIDADE */
+
+/* CELULAR (até 768px) */
+@media (max-width: 768px) {
+    .bodyImg {
+      padding: 20px 10px;
+      height: auto;
+      min-height: 100vh;
+    }
+  
+    .asideLogin, .asideCadastro, .asideVerificar, .asideEsqueciSenha, .asideResetSenha {
+      width: 90%;
+      max-width: 400px;
+      height: auto;
+      padding: 15px;
+    }
+  
+    .headerHome {
+      flex-direction: row; /* Mantém logo e toggle lado a lado */
+      padding: 20px;
+      height: auto;
+      margin-bottom: 20px;
+      position: relative;
+    }
+  
+    .menu-toggle {
+      display: block; /* Mostra o botão hambúrguer */
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      margin-left: auto; /* Posiciona à direita */
+    }
+  
+    .navHome {
+      position: fixed; /* Menu lateral fixo */
+      left: -100%; /* Oculto por padrão */
+      top: 0;
+      width: 250px; /* Largura do menu */
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9); /* Fundo semi-transparente */
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 50px 20px;
+      transition: left 0.3s ease; /* Animação suave */
+      z-index: 1000;
+    }
+  
+    .navHome.open {
+      left: 0; /* Mostra quando aberto */
+    }
+  
+    .navHomeBotoes {
+      font-size: 16px;
+      padding: 15px 0;
+      width: 100%;
+      text-align: left;
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  
+    .btnConectar {
+      width: 100%;
+      height: 50px;
+      font-size: 16px;
+      margin-top: 20px;
+      background: #00ab72;
+    }
+  
+    .logoHome {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .divTxt {
+      height: auto;
+      padding: 20px;
+    }
+  
+    .txt2Home {
+      font-size: 40px;
+      text-align: center;
+    }
+  
+    .txt3Home {
+      font-size: 20px;
+    }
+  
+    .dropdown-menu-home1, .dropdown-menu-home2 {
+      min-width: 200px;
+      position: static;
+      display: block;
+      background: rgba(0, 171, 114, 0.9);
+    }
+  
+    .asideAdmin {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+  
+    .headerAdmin {
+      margin-left: 0;
+      width: 100%;
+    }
+  
+    .main-container-tabela {
+      margin-left: 0;
+      width: 100%;
+    }
+  
+    .tabela-container-tabela {
+      overflow-x: auto;
+      font-size: 12px;
+    }
+  
+    .tabela-container-tabela th, .tabela-container-tabela td {
+      padding: 6px;
+    }
+  
+    .suporte-content {
+      grid-template-columns: 1fr;
+    }
+  
+    .grade-tutoriais {
+      grid-template-columns: 1fr;
+    }
+  
+    .chat-modal {
+      width: 95%;
+      height: 80vh;
+    }
+  
+    .contacts {
+      width: 100%;
+    }
+  
+    .forms, .formsMentor, .formsAlunos {
+      padding: 10px;
+    }
+  
+    .pergunta, .perguntaMentor, .perguntaAlunos {
+      width: 100%;
+    }
+  
+    .inputPergunta, .inputPerguntaMentor, .inputPerguntaAluno {
+      width: 100%;
+    }
+  
+    .divBotoesMentor, .botoesAluno {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .modal {
+      width: 90%;
+    }
+  
+    .modal-editar {
+      width: 90%;
+    }
+  }
+  
+  /* TABLET (768px a 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .bodyImg {
+      padding: 30px 20px;
+    }
+  
+    .asideLogin, .asideCadastro, .asideVerificar, .asideEsqueciSenha, .asideResetSenha {
+      width: 80%;
+      max-width: 500px;
+    }
+  
+    .headerHome {
+      padding: 40px 50px;
+    }
+  
+    .menu-toggle {
+      display: none; /* Oculta o hambúrguer em tablet */
+    }
+  
+    .navHome {
+      width: 80%;
+      position: static; /* Volta ao normal */
+      background: transparent;
+      flex-direction: row;
+    }
+  
+    .navHomeBotoes {
+      font-size: 15px;
+    }
+  
+    .btnConectar {
+      width: 140px;
+    }
+  
+    .logoHome {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .txt2Home {
+      font-size: 50px;
+    }
+  
+    .txt3Home {
+      font-size: 25px;
+    }
+  
+    .asideAdmin {
+      width: 200px;
+    }
+  
+    .headerAdmin {
+      margin-left: 200px;
+      width: calc(100% - 200px);
+    }
+  
+    .main-container-tabela {
+      margin-left: 200px;
+      width: calc(100% - 200px);
+    }
+  
+    .suporte-content {
+      grid-template-columns: 250px 1fr;
+    }
+  
+    .grade-tutoriais {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .chat-modal {
+      width: 700px;
+    }
+  
+    .forms, .formsMentor, .formsAlunos {
+      padding: 15px;
+    }
+  
+    .pergunta, .perguntaMentor, .perguntaAlunos {
+      width: 80%;
+    }
+  
+    .modal {
+      width: 500px;
+    }
+  
+    .modal-editar {
+      width: 400px;
+    }
+  }
+  
+  /* DESKTOP (acima de 1024px) */
+  @media (min-width: 1025px) {
+    .bodyImg {
+      padding: 50px 0;
+    }
+  
+    .asideLogin, .asideCadastro, .asideVerificar, .asideEsqueciSenha, .asideResetSenha {
+      width: 600px;
+    }
+  
+    .headerHome {
+      padding-left: 80px;
+      padding-right: 100px;
+    }
+  
+    .menu-toggle {
+      display: none; /* Oculta o hambúrguer em desktop */
+    }
+  
+    .navHome {
+      width: 900px;
+      position: static;
+      background: transparent;
+      flex-direction: row;
+    }
+  
+    .txt2Home {
+      font-size: 70px;
+    }
+  
+    .txt3Home {
+      font-size: 30px;
+    }
+  
+    .asideAdmin {
+      width: 220px;
+    }
+  
+    .headerAdmin {
+      margin-left: 220px;
+      width: calc(100% - 220px);
+    }
+  
+    .main-container-tabela {
+      margin-left: 220px;
+      width: calc(100% - 220px);
+    }
+  
+    .suporte-content {
+      grid-template-columns: 280px 1fr;
+    }
+  
+    .grade-tutoriais {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .chat-modal {
+      width: 800px;
+    }
+  
+    .forms, .formsMentor, .formsAlunos {
+      padding: 20px 0;
+    }
+  
+    .pergunta, .perguntaMentor, .perguntaAlunos {
+      width: 900px;
+    }
+  
+    .modal {
+      width: 600px;
+    }
+  
+    .modal-editar {
+      width: 450px;
+    }
+  }
+  
