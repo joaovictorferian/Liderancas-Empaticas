@@ -9,7 +9,7 @@ function VerificandoEmail() {
   useEffect(() => {
     const emailVerificado = async () => {
         try{
-            const response = await axios.get(`http://localhost:500/api/users/verificar/${tokenVerifyMail}`)
+            const response = await axios.get(`https://projeto404-site-backend.vercel.app/api/users/verificar/${tokenVerifyMail}`)
             alert(response.data.msg || "Email verificado com sucesso!")
             navigate("/")
 

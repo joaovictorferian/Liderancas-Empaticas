@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:500/api/users",
+  baseURL: "https://projeto404-site-backend.vercel.app/api/users",
 });
 
 api.interceptors.request.use(
@@ -29,10 +29,8 @@ api.interceptors.response.use(
         return Promise.reject(error);
 
       }
-
-    // Verifica se o erro é relacionado  ao token expirado
     if ((status === 401 || status === 403) && !handledExpiredToken) {
-      handledExpiredToken = true; // Marca que o token expirou para evitar loops
+      handledExpiredToken = true; 
 
       try {
         console.log("🔴 Interceptor captou erro:", error.response);
@@ -42,20 +40,16 @@ api.interceptors.response.use(
         console.error("Erro ao tratar token expirado:", e);
       }
 
-      // Remove o token e outros dados do localStorage
       localStorage.removeItem("token");
       localStorage.removeItem("ID_Usuario");
       localStorage.removeItem("Tipo_Usuario");
       localStorage.removeItem("Email");
 
-      // Redefine a variável para permitir novos logins
       handledExpiredToken = false;
 
-      // Redireciona para a página de login
       window.location.href = "/login";
     }
 
-    // Retorna o erro para ser tratado normalmente
     return Promise.reject(error);
   }
 );

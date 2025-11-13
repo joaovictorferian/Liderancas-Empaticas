@@ -10,7 +10,7 @@ function EsqueciMinhaSenha() {
 
     try {
       const response = await axios.post(
-        "http://localhost:500/api/users/auth/forgotPassword",
+        "https://projeto404-site-backend.vercel.app/api/users/auth/forgotPassword",
         { email }
       )
       setMensagem(response.data.message || "Email de recuperação enviado!")
