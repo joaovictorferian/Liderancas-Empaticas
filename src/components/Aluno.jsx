@@ -45,7 +45,7 @@ function Alunos({ onSelectPage }) {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
-  const teste = "aluno ";
+  const teste = "Aluno";
   filtros[0] = "Alunos";
 
   const carregarAlunos = async () => {
