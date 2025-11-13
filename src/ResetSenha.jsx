@@ -17,7 +17,7 @@ function ResetSenha() {
     try {
       console.log("Enviando requisição...");
       const response = await axios.put(
-      `https://projeto404-site-backend.vercel.app/api/users/auth/resetPassword/${token}`,
+      `https://liderancas-empaticas-backend-production.up.railway.app/api/users/auth/resetPassword/${token}`,
         {senha, confirmarSenha }
       )
       console.log("Resposta recebida:", response.data);

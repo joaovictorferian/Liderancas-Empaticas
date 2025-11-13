@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://projeto404-site-backend.vercel.app/api/users",
+  baseURL: "https://liderancas-empaticas-backend-production.up.railway.app/api/users",
 });
 
 api.interceptors.request.use(
