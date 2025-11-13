@@ -3,6 +3,7 @@ import axios from "axios"
 
 function EsqueciMinhaSenha() {
   const [email, setEmail] = useState("")
+  const [mensagem, setMensagem] = useState("")
 
 
   const handleSubmit = async (e) => {
