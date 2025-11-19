@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaTimes, FaPaperPlane } from "react-icons/fa";
 import api from "../../api.js";
 
-const ModalChamado = ({ chamado, onClose }) => {
+const ModalChamado = ({ carregarChamados, chamado, onClose }) => {
   const [mensagens, setMensagens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [novaMensagem, setNovaMensagem] = useState("");
@@ -41,6 +41,7 @@ const ModalChamado = ({ chamado, onClose }) => {
       if (resMensagem.status === 201) {
         setNovaMensagem("");
         carregarMensagens();
+        carregarChamados();
       } else {
         alert(resMensagem.data.error || "Erro ao enviar mensagem.");
       }
@@ -75,11 +76,11 @@ const ModalChamado = ({ chamado, onClose }) => {
         ) : (
           <div className="mensagens-lista">
             {mensagens.map((m) => {
-            let remetente = m.Remetente
-            let tipoRemetente = m.Tipo_Remetente
-           
+              let remetente = m.Remetente
+              let tipoRemetente = m.Tipo_Remetente
+
               let isSuporte =
-              tipoRemetente == "Usuario" && remetente == 1;
+                tipoRemetente == "Usuario" && remetente == 1;
 
               // Define a classe correta
               const classeMsg = isSuporte

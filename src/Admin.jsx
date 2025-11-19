@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "./api.js";
 import Aluno from "./components/Aluno.jsx";
 import Grupo from "./components/grupo.jsx";
@@ -24,7 +24,22 @@ function Admin() {
     Usuario_Cargo: "",
   });
 
-  const [activeScreen, setActiveScreen] = useState("home");
+  const [activeScreen, setActiveScreen] = useState("admin");
+
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
+  const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth > 768);
+
+  useEffect(() => {
+    const onResize = () => {
+
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      // se voltar para desktop, garante sidebar aberta; se for mobile, esconde por padrão
+      setSidebarOpen(!mobile);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("ID_Usuario");
@@ -45,6 +60,8 @@ function Admin() {
   return (
     <div className="bodyAdmin">
       <SidebarAdmin
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen((s) => !s)}
         onLogout={handleLogout}
         onUpdate={handleUpdate}
         userData={userData}
@@ -52,14 +69,20 @@ function Admin() {
         onSelectPage={(page) => setActiveScreen(page)}
       />
       <div className="mainAdmin">
-          
 
-        {/* renderiza a tela conforme activeScreen */}
-        {/* {activeScreen === "home" && <h2>Bem-vindo ao painel22222222</h2>} */}
+        {isMobile && (
+          <button
+            className="sidebar-toggle"
+            aria-label="Abrir menu"
+            onClick={() => setSidebarOpen((s) => !s)}
+          >
+            ☰
+          </button>
+        )}
+
         {activeScreen === "aluno" && (
           <Aluno onSelectPage={(page) => setActiveScreen(page)} />
         )}
-        {/* {activeScreen === "relatorios" && <div>Relatórios (placeholder)</div>} */}
         {activeScreen === "grupos" && (
           <Grupo onSelectPage={(page) => setActiveScreen(page)} />
         )}
@@ -86,7 +109,7 @@ function Admin() {
         )}
 
         {activeScreen === "CadastroCampanha" && <CadastroCampanha />}
-  {activeScreen === "CadastroDinheiro" && <CadastroDinheiro onSelectPage={(page) => setActiveScreen(page)} />}
+        {activeScreen === "CadastroDinheiro" && <CadastroDinheiro onSelectPage={(page) => setActiveScreen(page)} />}
         {activeScreen === "suporte" && <PainelSuporte />}
       </div>
     </div>
