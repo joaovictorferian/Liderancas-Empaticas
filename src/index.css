@@ -4,14 +4,12 @@
   font-family: Poppins, sans-serif;
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
-
 .bodyImg {
   display: flex;
   justify-content: center;
@@ -36,7 +34,7 @@ body {
 
 .bodyAdmin aside {
   width: 220px;
-
+ 
   color: white;
   display: flex;
   flex-direction: column;
@@ -140,7 +138,7 @@ form {
 }
 
 
-.bntTiposEntrada:hover {
+.bntTiposEntrada:hover{
   scale: 1.1;
 
 }
@@ -149,8 +147,7 @@ form {
 .tipo-btns-container {
   margin-bottom: 12px;
   display: flex;
-  gap: 8px;
-  /* espaço entre os botões */
+  gap: 8px; /* espaço entre os botões */
   align-items: center;
 }
 
@@ -444,12 +441,9 @@ form {
 /* Centraliza o aside no meio da tela */
 .asideVerificar {
   display: flex;
-  flex-direction: column;
-  /* organiza os elementos em coluna */
-  align-items: center;
-  /* centraliza horizontalmente */
-  justify-content: center;
-  /* centraliza verticalmente */
+  flex-direction: column; /* organiza os elementos em coluna */
+  align-items: center; /* centraliza horizontalmente */
+  justify-content: center; /* centraliza verticalmente */
   width: 450px;
   background-color: white;
   border-radius: 10px;
@@ -564,12 +558,11 @@ form {
   border-radius: 10px;
   margin-bottom: -20px;
 }
-
 .inputEsqueciSenha:placeholder {
   color: black;
 }
 
-.pEsqueciSenha {
+.pEsqueciSenha{
   display: flex;
   align-self: center;
   justify-self: center;
@@ -673,11 +666,9 @@ form {
   border-radius: 10px;
   margin-bottom: 40px;
 }
-
 .inputResetSenha:placeholder {
   color: black;
 }
-
 .pEsqueciSenha {
   display: flex;
   align-self: center;
@@ -729,14 +720,12 @@ form {
 #root {
   height: 100%;
 }
-
 .mainAdmin {
   background-color: transparent;
   height: 100%;
   width: 100%;
   background-color: #fafafa;
 }
-
 .asideAdmin {
   display: flex;
   position: absolute;
@@ -783,20 +772,16 @@ form {
   padding-left: 20px;
   margin: 5px 0;
 }
-
 .menuAdmin.bottomMenu {
-  margin-top: auto;
-  /* Empurra para o final da sidebar */
+  margin-top: auto; /* Empurra para o final da sidebar */
 }
 
 .chk-tabela {
   accent-color: #00ab72;
 }
-
 .testechk {
   accent-color: #038a5d;
 }
-
 /* .chk-tabela:checked{
    color: #fafafa;
 }
@@ -813,11 +798,9 @@ form {
 .tabela-alunos td {
   white-space: nowrap;
 }
-
-.tbody tr {
+.tbody tr{
   transition: 0.3s;
 }
-
 .tabela {
   transition: 0.3s;
   width: 100%;
@@ -835,7 +818,6 @@ form {
 .tabela-container-tabela td {
   white-space: nowrap;
 }
-
 .btnSub {
   display: flex;
   align-items: center;
@@ -889,25 +871,22 @@ form {
   background-color: #757575;
   margin-top: 10px;
 }
-
 .headerAdmin {
   margin-left: 220px;
   width: calc(100% - 220px);
 }
-
 .divPesquisar {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   /* gap: 10px; */
-
+ 
 
   padding: 30px;
   justify-content: space-between;
 }
-
-.chat-modal .divPesquisar {
-  padding: 10px;
+.chat-modal .divPesquisar{
+ padding: 10px;
 }
 
 .divEsquerda {
@@ -937,7 +916,6 @@ form {
   background-color: #00ab72;
   cursor: pointer;
 }
-
 .inputAdmin:focus {
   outline: none;
 }
@@ -946,7 +924,6 @@ form {
   background: #029463;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .iconPesquisa {
   display: flex;
   align-self: center;
@@ -968,18 +945,15 @@ form {
   justify-self: center;
   align-self: center;
 }
-
 .divDireita {
   display: flex;
   /* align-items: center; */
   gap: 10px;
   margin-right: 30px;
 }
-
 .divDireita button:hover {
-  scale: 1.1;
+ scale: 1.1;
 }
-
 .modalConfig {
   position: absolute;
   left: 260px;
@@ -1035,7 +1009,6 @@ form {
     opacity: 0;
     transform: translate(-50%, -45%);
   }
-
   to {
     opacity: 1;
     transform: translate(-50%, -50%);
@@ -1107,21 +1080,18 @@ form {
 .cabecalho-tabela {
   padding-top: 10px;
 }
-
 .main-container-tabela .cabecalho-tabela {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
-
 .rightMenu-tabela {
   display: flex;
   margin-left: auto;
   gap: 10px;
   width: auto;
 }
-
-.tiposEntrada {
+.tiposEntrada{
   gap: 10px;
   display: flex;
 }
@@ -1238,7 +1208,6 @@ form {
   background: #e9e8e8;
   font-weight: bold;
 }
-
 .main-container-tabela .tabela-container-tabela tr:nth-child(odd) {
   background: white;
 }
@@ -1246,7 +1215,6 @@ form {
 .main-container-tabela .tabela-container-tabela tr:nth-child(even) {
   background: #e9e8e8;
 }
-
 .main-container-tabela .tabela-container-tabela tr:hover {
   background: #aaaaaa;
 }
@@ -1259,7 +1227,7 @@ form {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0,0,0,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1274,11 +1242,11 @@ form {
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
 .btn-fechar-modal {
-
+ 
   top: 10px;
   right: 10px;
   background: transparent;
@@ -1293,15 +1261,11 @@ form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  overflow-y: auto;
-  max-height: 250px;
 }
-
-.input-mensagem {
+.input-mensagem{
   width: 80%;
 }
-
-.btn-enviar {
+.btn-enviar{
   margin: 5px;
   width: 90px;
   height: 40px;
@@ -1310,8 +1274,7 @@ form {
   color: #fafafa;
   background: #00ab72;
 }
-
-.btn-enviar:hover {
+.btn-enviar:hover{
   scale: 1.03;
   color: #00ab72;
   background: #fafafa;
@@ -1323,16 +1286,14 @@ form {
   background-color: #f4f4f4;
   padding: 12px 16px;
   border-radius: 8px;
-
+ 
 }
-
 .aluno-mensagem {
   background: #e9ffe9;
   align-self: flex-end;
   border-right: 4px solid #28a745;
   min-width: 250px;
 }
-
 .suporte-mensagem {
   min-width: 250px;
   background: #cce5ff;
@@ -1350,14 +1311,14 @@ form {
 }
 
 .chamados-tela {
-
+  
   background: white;
   padding: 25px;
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   width: 90%;
   max-width: calc(100% - 220px);
-  margin-left: 220px;
+  margin-left:  220px;
 
 }
 
@@ -1385,17 +1346,6 @@ form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-}
-
-.dashboard-top {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-
-.resumo-grid {
-  display: flex;
-  justify-content: space-between;
 }
 
 .chamado-card {
@@ -1567,7 +1517,7 @@ form {
 }
 
 .caixa-status {
-
+  
   border-radius: 5px;
   color: white;
   margin-bottom: 10px;
@@ -1622,7 +1572,6 @@ form {
   border-radius: 4px;
   margin-bottom: 10px;
 }
-
 /* Cadastro */
 .cadastro-container {
   width: calc(100% - 220px);
@@ -1632,13 +1581,13 @@ form {
 }
 
 /* GRUPO DE INPUT */
-.cadastro-form {
+.cadastro-form{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr ;
   gap: 10px
 }
 
-.form-group label {
+.form-group label{
   font-weight: 500;
   color: #333;
   font-size: 0.95rem;
@@ -1648,25 +1597,23 @@ form {
 }
 
 .form-group input {
-  width: 100%;
+ width: 100%;
   padding: 10px;
-
+  
   margin-bottom: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 14px;
 }
-
-.form-buttons {
+.form-buttons{
   display: flex;
   gap: 5px;
 }
-
 .btn-confirmar,
 .btn-cancelar {
   width: 50%;
   margin-top: 20px;
-
+  
   padding: 12px 25px;
   border: none;
   border-radius: 6px;
@@ -1768,7 +1715,7 @@ form {
   border-radius: 10px 10px 0 0;
 }
 
-.pergunta>div:not(.divInputTypeRadio) {
+.pergunta > div:not(.divInputTypeRadio) {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1797,8 +1744,7 @@ form {
   margin-left: 0;
   cursor: pointer;
 }
-
-.pergunta>div label {
+.pergunta > div label {
   display: flex;
   align-items: center;
   margin: 0 15px;
@@ -1814,16 +1760,13 @@ form {
   color: white;
   margin-top: 20px;
 }
-
 .proximo:hover {
   background-color: #01885b;
 }
-
 .proximo:disabled {
   background-color: #00ab7277;
   cursor: not-allowed;
 }
-
 .proximo:enabled {
   border: none;
 }
@@ -1902,8 +1845,7 @@ form {
   align-items: flex-start;
   flex-direction: column;
   width: 900px;
-  gap: 10px;
-  /* ADICIONE ISSO - cria o espaço entre título e input */
+  gap: 10px; /* ADICIONE ISSO - cria o espaço entre título e input */
   margin-bottom: 20px;
 }
 
@@ -1912,8 +1854,7 @@ form {
   width: 100%;
   border-radius: 10px 10px 0 0;
   padding: 15px 25px;
-  margin: 0;
-  /* MUDE DE "0 0 20px 0" PARA "0" */
+  margin: 0; /* MUDE DE "0 0 20px 0" PARA "0" */
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -1931,8 +1872,7 @@ form {
   padding: 10px 25px;
   box-sizing: border-box;
   font-size: 14px;
-  margin: 0;
-  /* MUDE DE "20px" PARA "0" */
+  margin: 0; /* MUDE DE "20px" PARA "0" */
 }
 
 .inputPerguntaMentor::placeholder {
@@ -2343,7 +2283,6 @@ form {
     opacity: 0;
     transform: translateY(-10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -2359,25 +2298,21 @@ form {
   gap: 30px;
   justify-content: center;
 }
-
 .sectionfilter {
   display: flex;
   gap: 10px;
 }
 
-.modal .sectionfilter2 select {
+.modal .sectionfilter2 select{
   width: 300px;
 }
-
 .sectionfilter2 {
   display: flex;
   gap: 10px;
 }
-
 .modal select {
   width: 150px;
 }
-
 .btnFilter {
   margin-top: 10px;
   background: #00ab72;
@@ -2389,7 +2324,6 @@ form {
   font-weight: bolder;
   border-radius: 10px;
 }
-
 .btnFilter:hover {
   background: #fafafa;
   color: #00ab72;
@@ -2399,7 +2333,6 @@ form {
 .formEdit {
   display: grid;
 }
-
 .export {
   width: 300px;
 }
@@ -2408,8 +2341,7 @@ form {
 /* Container principal */
 .suporte-container {
   width: 100%;
-  max-height: calc(100vh - 300px);
-  /* Ajusta para o header */
+  max-height: calc(100vh - 300px); /* Ajusta para o header */
 
   background: #f5f5f5;
   margin-top: 0;
@@ -2477,7 +2409,6 @@ form {
 .caixa-status.verde {
   background: linear-gradient(135deg, #00ab72 0%, #00c781 100%);
 }
-
 /* Botão abrir chamados */
 .botao-abrir-chamado {
   padding: 12px 20px;
@@ -2571,7 +2502,6 @@ form {
     grid-template-columns: 1fr;
   }
 }
-
 /* SUPORTE */
 
 /* Chat */
@@ -2742,10 +2672,9 @@ form {
 /* Chat */
 
 /* GERAL */
-.lista-filtros>div:first-child {
+.lista-filtros > div:first-child {
   display: none;
 }
-
 .tipo-modal-buttons {
   display: flex;
   justify-content: space-around;
@@ -2762,47 +2691,44 @@ form {
   color: white;
   font-weight: 600;
   transition: all 0.25s ease;
-
+  
 }
 
 .tipo-btn.entrada {
-  background-color: #00ab72;
+  background-color: #00ab72; 
 }
 
 .tipo-btn.entrada:hover {
   background-color: #fafafa;
   color: #00ab72;
-
+  
   transform: scale(1.05);
-
+  
 }
 
 .tipo-btn.saida {
-  background-color: #e53935;
-  /* red for saída */
+  background-color: #e53935; /* red for saída */
   color: #ffffff;
 }
 
 .tipo-btn.saida:hover {
-  background-color: #b71c1c;
-  /* darker red on hover */
+  background-color: #b71c1c; /* darker red on hover */
   color: #ffffff;
   transform: scale(1.05);
 }
 
-.btnChamados {
+.btnChamados{
   padding: 15px;
   background: transparent;
   border: none;
   width: 100%;
   height: 100%;
 }
-
 textarea {
   resize: none;
   flex: 1;
   padding: 12px;
-  border: 1px solid #c5c5c5;
+  border: 1px solid #c5c5c5  ;
   border-radius: 5px;
   font-size: 14px;
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../api.js"
 
-function SidebarAdmin({ isOpen = true, onToggle = () => { }, onLogout, onUpdate, userData, setUserData, onSelectPage }) {
+function SidebarAdmin({ onLogout, onUpdate, userData, setUserData, onSelectPage }) {
   const [modalConfig, setModalConfig] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
   const [openCadastros, setOpenCadastros] = useState(false);
@@ -56,28 +56,28 @@ function SidebarAdmin({ isOpen = true, onToggle = () => { }, onLogout, onUpdate,
   };
 
   return (
-    <aside className={`asideAdmin ${isOpen ? "open" : "collapsed"}`}>
-      <button className="close-sidebar-btn" onClick={onToggle} aria-label="Fechar menu">✕</button>
+    <aside className="asideAdmin">
       <img className="logoAdmin" src="LogoFundoBranco.avif" alt="logo" />
 
       <ul className="menuAdmin">
         <li>
-          <button className="btnAdmin" onClick={() => { onSelectPage("home"); if (onToggle) onToggle(); }}>
+          <button className="btnAdmin" onClick={() => onSelectPage("home")}>
             <img className="icon" src="home.png" alt="home" /> Página inicial
           </button>
         </li>
         <li>
-          <button className="btnAdmin" onClick={() => { onSelectPage("relatorios"); if (onToggle) onToggle(); }}>
+          <button className="btnAdmin" onClick={() => onSelectPage("relatorios")}>
             <img className="icon" src="report.png" alt="relatorio" /> Relatórios
           </button>
         </li>
 
+        {/* CADASTROS */}
         <li>
           <button
             className="btnAdmin"
             onClick={() => {
               setOpenCadastros(!openCadastros);
-              if (!openCadastros) setOpenDoacoes(false);
+              if (!openCadastros) setOpenDoacoes(false); // fecha doações ao abrir cadastros
             }}
           >
             <img className="icon" src="verify.png" alt="cadastros" /> Cadastros
@@ -85,12 +85,12 @@ function SidebarAdmin({ isOpen = true, onToggle = () => { }, onLogout, onUpdate,
           {openCadastros && (
             <ul className="submenu">
               <li>
-                <button className="btnSub" onClick={() => { onSelectPage("aluno"); if (onToggle) onToggle(); }}>
+                <button className="btnSub" onClick={() => onSelectPage("aluno")}>
                   <img className="icon" src="graduation.png" alt="Alunos" /> Aluno
                 </button>
               </li>
               <li>
-                <button className="btnSub" onClick={() => { onSelectPage("grupos"); if (onToggle) onToggle(); }}>
+                <button className="btnSub" onClick={() => onSelectPage("grupos")}>
                   <img className="icon" src="people.png" alt="Grupo" /> Grupos
                 </button>
               </li>
@@ -98,12 +98,13 @@ function SidebarAdmin({ isOpen = true, onToggle = () => { }, onLogout, onUpdate,
           )}
         </li>
 
+        {/* DOAÇÕES */}
         <li>
           <button
             className="btnAdmin"
             onClick={() => {
               setOpenDoacoes(!openDoacoes);
-              if (!openDoacoes) setOpenCadastros(false);
+              if (!openDoacoes) setOpenCadastros(false); // fecha cadastros ao abrir doações
             }}
           >
             <img className="icon" src="heart.png" alt="doacoes" /> Doações
@@ -111,17 +112,17 @@ function SidebarAdmin({ isOpen = true, onToggle = () => { }, onLogout, onUpdate,
           {openDoacoes && (
             <ul className="submenu">
               <li>
-                <button className="btnSub" onClick={() => { onSelectPage("alimentos"); if (onToggle) onToggle(); }}>
+                <button className="btnSub" onClick={() => onSelectPage("alimentos")}>
                   <img className="icon" src="restaurant.png" alt="alimentos" /> Alimentos
                 </button>
               </li>
               <li>
-                <button className="btnSub" onClick={() => { onSelectPage("dinheiro"); if (onToggle) onToggle(); }}>
+                <button className="btnSub" onClick={() => onSelectPage("dinheiro")}>
                   <img className="icon" src="dollar.png" alt="dinheiro" /> Dinheiro
                 </button>
               </li>
               <li>
-                <button className="btnSub" onClick={() => { onSelectPage("campanhas"); if (onToggle) onToggle(); }}>
+                <button className="btnSub" onClick={() => onSelectPage("campanhas")}>
                   <img className="icon" src="campaign.png" alt="campanhas" /> Campanhas
                 </button>
               </li>
@@ -130,15 +131,15 @@ function SidebarAdmin({ isOpen = true, onToggle = () => { }, onLogout, onUpdate,
         </li>
 
         <li>
-          <button className="btnAdmin" onClick={() => { onSelectPage("usuarios"); if (onToggle) onToggle(); }}>
+          <button className="btnAdmin" onClick={() => onSelectPage("usuarios")}>
             <img className="icon" src="graduation.png" alt="usuarios" /> Usuários
           </button>
         </li>
-
+        
         <li>
           <button
             className="btnAdmin"
-            onClick={() => { onSelectPage("suporte"); if (onToggle) onToggle(); }}
+            onClick={() => onSelectPage("suporte")}
           >
             <img className="icon" src="suport.png" alt="suporte" /> Suporte
           </button>
@@ -161,6 +162,7 @@ function SidebarAdmin({ isOpen = true, onToggle = () => { }, onLogout, onUpdate,
         </li>
       </ul>
 
+      {/* Modal Configurações */}
       {modalConfig && (
         <div className="modalConfig">
           <button className="btnModal" onClick={handleOpenEdit}>
@@ -172,6 +174,7 @@ function SidebarAdmin({ isOpen = true, onToggle = () => { }, onLogout, onUpdate,
         </div>
       )}
 
+      {/* Modal Editar Perfil */}
       {modalEdit && (
         <div className="modalEdit">
           <h2>Editar Perfil</h2>

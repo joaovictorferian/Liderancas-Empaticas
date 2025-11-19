@@ -76,7 +76,7 @@ function Home() {
          <button className="btnConectar" onClick={() => (window.location.href = "login")}>Conecte-se</button>
        )}
        {!showConecteSe && showAdminButton && (
-          <button className="btnConectar" onClick={() => (window.location.href = "/relatorios")}>Admin</button>
+         <button className="btnConectar" onClick={() => (window.location.href = "/admin")}>Admin</button>
        )}
 
        {showLogout && (
